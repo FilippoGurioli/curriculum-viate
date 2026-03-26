@@ -1,49 +1,37 @@
-<!DOCTYPE html>
-<html lang="{{ .Lang }}">
-<head>
-    <meta charset="UTF-8">
-    {{ $dataKey := printf "cv_%s" .Lang }}
-    {{ $cv := index .Site.Data $dataKey }}
-    
-    <title>{{ $cv.header.name }}</title>
-</head>
-<body>
-    <nav>
-        {{ range .AllTranslations }}
-            <a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
-        {{ end }}
-    </nav>
+{{ if .IsTranslated }}
+    <!DOCTYPE html>
+    <html lang="{{ .Lang }}">
+    <head>
+        <meta charset="UTF-8">
+        {{ $dataKey := printf "cv_%s" .Lang }}
+        {{ $cv := index .Site.Data $dataKey }}
+        <title>{{ $cv.header.name }} - CV</title>
+        </head>
+    <body>
+        <nav>
+            {{ range .AllTranslations }}
+                <a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+            {{ end }}
+        </nav>
 
-    {{ $dataKey := printf "cv_%s" .Lang }}
-    {{ $cv := index .Site.Data $dataKey }}
+        <h1>{{ $cv.header.name }}</h1>
+        <p>{{ $cv.summary }}</p>
+        
+        <hr>
+        <p>Language: {{ .Lang }}</p>
+    </body>
+    </html>
 
-    <h1>{{ $cv.header.name }}</h1>
-    <h2>{{ $cv.header.title }}</h2>
-    
-    <p>{{ $cv.summary }}</p>
-
-    <h3>Experience</h3>
-    <ul>
-    {{ range $cv.experience }}
-        <li>
-            <strong>{{ .company }}</strong> - {{ .role }} ({{ .period }})
-            <ul>
-                {{ range .bullet_points }}
-                <li>{{ . }}</li>
-                {{ end }}
-            </ul>
-        </li>
-    {{ end }}
-    </ul>
-
-    <h3>Skills</h3>
-    <ul>
-    {{ range $cv.skills }}
-      <li><strong>{{ .category }}:</strong> {{ delimit .values ", " }}</li>
-    {{ end }}
-    </ul>
-
-    <hr>
-    <p>Viewing version: <strong>{{ .Lang }}</strong></p>
-</body>
-</html>
+{{ else }}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirecting...</title>
+        <link rel="canonical" href="{{ .Site.BaseURL }}en/">
+        <meta http-equiv="refresh" content="0; url={{ .Site.BaseURL }}en/">
+    </head>
+    <body>
+        <p>Redirecting to <a href="{{ .Site.BaseURL }}en/">English version</a>...</p>
+    </body>
+    </html>
+{{ end }}
