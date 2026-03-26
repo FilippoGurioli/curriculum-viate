@@ -7,8 +7,8 @@ header:
   linkedin: linkedin.com/in/filippo-gurioli-23a926277
 
 summary: >
-  Backend-focused engineer with 2+ years of experience in distributed systems 
-  and cloud infrastructure. Passionate about CI/CD automation and DX.
+  Software Engineer with a focus on distributed systems and cloud infrastructure.
+  Passionate about automating CI/CD pipelines and improving Developer Experience (DX).
 
 skills:
   - category: Core Languages
@@ -30,9 +30,9 @@ experience:
     location: Cesena, Italy
     period: 2024 — Present
     bullet_points:
-      - Boot the company main product IAfterSales
-      - Developed a custom build automator tailored for internal product deployment, reducing manual build time by 75%
-      - Collaborate within a team of 5 people
+      - Architected and bootstrapped the foundation of IAfterSales, the company's flagship enterprise product.
+      - Developed a custom build automator tailored for internal product deployment, reducing manual build time by 75%.
+      - Collaborate within a team of 5 people.
   
   - company: RTS
     role: Software Developer
@@ -45,6 +45,7 @@ education:
   - institution: University of Bologna
     degree: Master's Degree in Computer Science
     year: 2026
+    description: Focus on Distributed Systems, DevOps and Agile approach
 
 projects:
   - name: AutoCV
