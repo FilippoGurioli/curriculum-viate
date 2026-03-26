@@ -52,40 +52,39 @@ jobs:
       - name: Install dependencies
         run: pip install Jinja2 PyYAML
 
-      - name: Generate TeX from YAML
+      - name: Generate TeX files
         run: python generate_latex_cv.py
 
-      - name: Compile LaTeX to PDF
+      - name: Compile English PDF
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: cv.tex
+          root_file: cv_en.tex
 
-      - name: Upload PDF Artifact
+      - name: Compile Italian PDF
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: cv_it.tex
+
+      - name: Upload PDF Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: CV-PDF
-          path: cv.pdf
+          name: CV-PDFs
+          path: cv_*.pdf
 
-      - name: Generate Tag
-        id: tagger
-        run: |
-          TAG_NAME="v$(date +'%Y.%m.%d-%H%M')"
-          echo "tag=$TAG_NAME" >> $GITHUB_OUTPUT
-          git tag $TAG_NAME
-          git push origin $TAG_NAME
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set Tag Name
+      - name: Generate Tag Name
         id: vars
-        run: echo "tag=v$(date +'%Y.%m.%d-%H%M')" >> $GITHUB_OUTPUT
+        run: |
+          TAG="v$(date +'%Y.%m.%d-%H%M')"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.vars.outputs.tag }}
           name: "CV Release ${{ steps.vars.outputs.tag }}"
-          files: cv.pdf
-          body: "Automated CV build."
+          files: |
+            cv_en.pdf
+            cv_it.pdf
+          body: "Automated CV build for both English and Italian versions."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
